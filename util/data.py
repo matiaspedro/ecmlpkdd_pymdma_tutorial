@@ -23,10 +23,10 @@ def dict_collate_fn(batch):
 
 
 class ImageDataset(Dataset):
-    def __init__(self, dataset_root: Path, transform: Callable | None = None):
+    def __init__(self, dataset_root: Path, transform: Callable | None = None, annot_file: str = "dataset.csv"):
         self.dataset_root = Path(dataset_root)
 
-        self.data = pd.read_csv(self.dataset_root / "dataset.csv")
+        self.data = pd.read_csv(self.dataset_root / annot_file)
         self.transform = np.array if transform is None else transform
 
 
@@ -50,7 +50,8 @@ def make_dataloader(
     transform: Callable | None = None,
     batch_size: int = 32,
     num_workers: int = 4,
-    collate_fn: Callable = dict_collate_fn
+    collate_fn: Callable = dict_collate_fn,
+    annot_file: str = "dataset.csv"
 ) -> Tuple[Dataset, DataLoader]:
     """
     Creates an instance of the `ImageDataset` and a `DataLoader` for that dataset.
@@ -64,12 +65,12 @@ def make_dataloader(
     Returns:
         Tuple[Dataset, DataLoader]: The dataset and the data loader.
     """
-    dataset = ImageDataset(dataset_root=dataset_root, transform=transform)
+    dataset = ImageDataset(dataset_root=dataset_root, transform=transform, annot_file=annot_file)
     loader = DataLoader(
         dataset,
         batch_size=batch_size,
         num_workers=num_workers,
         shuffle=False,
-        collate_fn=collate_fn
+        collate_fn=collate_fn,
     )
     return dataset, loader

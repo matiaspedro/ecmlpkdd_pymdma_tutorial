@@ -9,14 +9,6 @@ In the first part we will be looking into the quailty of the real dataset and it
 
 ## Preparation
 
-To run the notebooks you will need to download the two datasets available at [Zenodo](10.5281/zenodo.15082599). 
-Once downloaded, unzip them into the `data/` folder.
-
-If you are on linux and assuming the zips are in the same folder as the notebooks,  you can use the following command:
-```bash
-tar -xvf "*.tar.gz" -C data 
-```
-
 Create a python virtual environment and install the requirements using the following commands:
 ```bash
 python3 -m venv .venv
